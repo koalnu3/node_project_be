@@ -17,5 +17,4 @@ authController.authenticate = async (req, res, next) => {
 authController.checkAdminPermission = async (req, res, next) => {
 }
 
-
 module.exports = authController;
