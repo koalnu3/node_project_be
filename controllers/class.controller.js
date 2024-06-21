@@ -6,12 +6,12 @@ const classController = {};
 classController.createClass = async (req,res) =>{
   try {
       const { 
-          id, name, description, image, curriculum, price, notice, categoryId, userId, status 
+          id, name, description, image, curriculum, price, notice, category, userId, status 
       } = req.body
   
       
       const newClass = new Class({
-          id, name, description, image, curriculum, price, notice, categoryId, userId, status
+          id, name, description, image, curriculum, price, notice, category, userId, status
       })
   
       await newClass.save()
