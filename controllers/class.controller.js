@@ -1,9 +1,24 @@
 const Class = require("../models/Class");
-
+const { response } = require("express")
 const PAGE_SIZE=8;
 const classController = {};
 
 classController.createClass = async (req,res) =>{
+  try {
+      const { 
+          id, name, description, image, curriculum, price, notice, categoryId, userId, status 
+      } = req.body
+  
+      
+      const newClass = new Class({
+          id, name, description, image, curriculum, price, notice, categoryId, userId, status
+      })
+  
+      await newClass.save()
+      res.status(200).json({ status: "success", newClass })
+    } catch (err) {
+      res.status(400).json({ status: "fail", error: err.message })
+    }
 }
 
 classController.getClass = async (req, res) => {
@@ -42,8 +57,18 @@ classController.updateClass = async (req, res) => {
 }
 
 classController.deleteClass = async (req, res) => {
+  try {
+      const classId = req.params.id;
+      const targetClass = await Class.findByIdAndUpdate(
+        { _id: classId },
+        { isDeleted: true }
+      );
+      if (!targetClass) throw new Error("No item found");
+      res.status(200).json({ status: "success" });
+    } catch (error) {
+      return res.status(400).json({ status: "fail", error: error.message });
+    }
 };
-
 classController.getClassById = async (req, res) => {
 };
 
