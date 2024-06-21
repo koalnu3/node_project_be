@@ -32,9 +32,9 @@ const classSchema = Schema({
         type:String,
         required:true     
     },
-    categoryId: {
-        type: mongoose.ObjectId, 
-        ref: Category
+    category: {
+        type:String,
+        required:true
     },
     userId: { 
         type: mongoose.ObjectId, 
