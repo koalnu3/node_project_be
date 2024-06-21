@@ -1,61 +1,66 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const jwt = require('jsonwebtoken')
-require('dotenv').config()
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
-const userSchema = Schema({
-    email:{
-        type:String,
-        required:true,
-        unique:true
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+const userSchema = Schema(
+  {
+    email: {
+      type: String,
+      required: true,
+      unique: true,
     },
     password: {
-        type:String,
-        required:true        
+      type: String,
+      required: true,
     },
     nickname: {
-        type:String,
-        required:true        
+      type: String,
+      required: true,
     },
     image: {
-        type:String,
-        required:true     
-    },    
+      type: String,
+      required: true,
+    },
     phoneNumber: {
-        type:Number,
-        required:true     
+      type: Number,
+      required: true,
     },
     level: {
-        type:String,
-        default:'customer'  //3type: customer, teacher, admin
+      type: String,
+      default: "customer", //3type: customer, teacher, admin
     },
     introduction: {
-        type:String,
-        required:false     
-    },   
+      type: String,
+      required: false,
+    },
     career: {
-        type:String,
-        required:false     
-    },   
+      type: Array,
+      required: false,
+    },
     status: {
-        type:String,
-        required:false     
-    }
-}, {timestamps:true})
+      type: String,
+      required: false,
+    },
+  },
+  { timestamps: true }
+);
 
 userSchema.methods.toJSON = function () {
-    const obj = this._doc
-    delete obj.password
-    delete obj.__v
-    delete obj.updateAt
-    delete obj.createAt
-    return obj
-}
+  const obj = this._doc;
+  delete obj.password;
+  delete obj.__v;
+  delete obj.updateAt;
+  delete obj.createAt;
+  return obj;
+};
 
-userSchema.methods.generateToken = async function(){
-    const token = await jwt.sign({_id:this.id}, JWT_SECRET_KEY, {expiresIn:'1d'})
-    return token
-}
+userSchema.methods.generateToken = async function () {
+  const token = await jwt.sign({ _id: this.id }, JWT_SECRET_KEY, {
+    expiresIn: "1d",
+  });
+  return token;
+};
 
-const User = mongoose.model('User', userSchema)
+const User = mongoose.model("User", userSchema);
 module.exports = User;
