@@ -26,6 +26,7 @@ authController.loginWithEmail = async (req,res) =>{
     }
 }
 
+//인증
 authController.authenticate = async (req, res, next) => {
     try {
         const tokenString = req.headers.authorization
@@ -41,6 +42,7 @@ authController.authenticate = async (req, res, next) => {
     }
 }
 
+//어드민 인가
 authController.checkAdminPermission = async (req, res, next) => {
     try {
         const { userId } = req
