@@ -29,7 +29,6 @@ classController.createClass = async (req, res) => {
       categoryId,
       userId,
       status,
-      //test
     });
 
     await newClass.save();
