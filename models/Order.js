@@ -6,28 +6,29 @@ const orderSchema = Schema(
   {
     orderNum: {
       type: String,
-      required: true 
+      required: true,
     },
-    userId: { 
-      type: mongoose.ObjectId, 
-      ref: User 
+    userId: {
+      type: mongoose.ObjectId,
+      ref: User,
     },
-    classId: { 
-      type: mongoose.ObjectId, 
-      ref: Class 
-    },   
-    price: { 
-      type: Number, 
-      required: true 
-    },   
+    classId: {
+      type: mongoose.ObjectId,
+      ref: Class,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
     payMethod: {
-      type:String,
-      required: true     
+      type: String,
+      required: true,
     },
     status: {
-      type:String,
-      required: true
-    }
+      type: String,
+      required: true,
+      default: "payment",
+    },
   },
   { timestamps: true }
 );
