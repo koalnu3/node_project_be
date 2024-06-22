@@ -112,6 +112,27 @@ orderController.getOrderList = async (req, res) => {
 };
 
 //주문수정(환불-관리자)
-orderController.updateOrder = async (req, res) => {};
+orderController.updateOrder = async (req, res) => {
+  try {
+    const orderId = req.params.id;
+    const { status } = req.body;
+
+    const order = await Order.findByIdAndUpdate(
+      { _id: orderId },
+      {
+        status,
+      },
+      { new: true }
+    );
+    if (!order) throw new Error("Can't find order");
+
+    let response = { status: "success" };
+    response.data = order;
+
+    res.status(200).json(response);
+  } catch (err) {
+    res.status(400).json({ status: "fail", error: err.message });
+  }
+};
 
 module.exports = orderController;
