@@ -6,10 +6,18 @@ const router = express.Router();
 //주문생성
 router.post("/", authController.authenticate, orderController.createOrder);
 
-//주문조회
+//주문조회(전체주문-관리자)
+router.get(
+  "/",
+  authController.authenticate,
+  authController.checkAdminPermission,
+  orderController.getOrderList
+);
+
+//주문조회(본인주문-회원)
 router.get("/me", authController.authenticate, orderController.getOrder);
 
-//주문수정(관리자환불?)
+//주문수정(환불-관리자)
 router.put(
   "/:id",
   authController.authenticate,
