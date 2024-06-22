@@ -47,6 +47,10 @@ const classSchema = Schema({
     isDeleted:{
         type:Boolean,
         default:false
+    },
+    likes: {
+        type: Number,
+        default: 0
     }
 }, {timestamps:true})
 
