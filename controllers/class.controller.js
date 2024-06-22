@@ -53,8 +53,19 @@ classController.getClass = async (req, res) => {
     }
   };
 
-classController.updateClass = async (req, res) => {
-}
+  classController.updateClass = async (req, res) => {
+    try {
+      const classId = req.params.id;
+      const updateData = req.body;
+  
+      const updatedClass = await Class.findByIdAndUpdate(classId, updateData, { new: true });
+      if (!updatedClass) throw new Error("No item found");
+  
+      res.status(200).json({ status: "success", updatedClass });
+    } catch (error) {
+      return res.status(400).json({ status: "fail", error: error.message });
+    }
+  };
 
 classController.deleteClass = async (req, res) => {
   try {
@@ -69,7 +80,17 @@ classController.deleteClass = async (req, res) => {
       return res.status(400).json({ status: "fail", error: error.message });
     }
 };
+
 classController.getClassById = async (req, res) => {
+  try {
+    const classId = req.params.id;
+    const targetClass = await Class.findById(classId);
+    if (!targetClass) throw new Error("No item found");
+
+    res.status(200).json({ status: "success", data: targetClass });
+  } catch (error) {
+    return res.status(400).json({ status: "fail", error: error.message });
+  }
 };
 
 module.exports = classController;
