@@ -43,6 +43,14 @@ const classSchema = Schema({
     status: {
         type:String,
         default:'request'     
+    },
+    isDeleted:{
+        type:Boolean,
+        default:false
+    },
+    likes: {
+        type: Number,
+        default: 0
     }
 }, {timestamps:true})
 
