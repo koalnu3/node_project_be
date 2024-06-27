@@ -3,6 +3,59 @@ const bcrypt = require("bcryptjs");
 
 const userController = {};
 
+userController.checkNickname = async (req, res, next) => {
+  try {
+    let { nickname } = req.body;
+    const userByNickname = await User.findOne({ nickname });
+    if (userByNickname) {
+      throw new Error("이미 가입된 닉네임입니다.");
+    }
+    console.log("userByNickname", userByNickname);
+    next();
+  } catch (error) {
+    res.status(400).json({ status: "fail", error: error.message });
+  }
+};
+
+userController.updateCustomer = async (req, res) => {
+  try {
+    const { nickname, image, career } = req.body;
+    const userData = await User.findByIdAndUpdate(
+      { _id: req.userId },
+      { nickname, image, career },
+      { new: true }
+    );
+
+    if (!userData) throw new Error("User data doesn't exist");
+
+    res.status(200).json({ status: "success", data: userData });
+  } catch (error) {
+    res.status(400).json({ status: "fail", error: error.message });
+  }
+};
+
+userController.updateProfileImage = async (req, res) => {
+  try {
+    const imageFile = req.file;
+    if (!imageFile) {
+      throw new Error("No image provided");
+    }
+    const userData = await User.findByIdAndUpdate(
+      { _id: req.userId },
+      {
+        image: imageFile.path, // Store the path or handle the file as needed
+      },
+      { new: true }
+    );
+
+    if (!userData) {
+      throw new Error("해당유저가 없습니다.");
+    }
+    return res.status(200).json({ status: "success", userData });
+  } catch (error) {
+    res.status(400).json({ status: "fail", error: err.message });
+  }
+};
 userController.createUser = async (req, res) => {
   try {
     let {
@@ -20,6 +73,8 @@ userController.createUser = async (req, res) => {
     if (user) {
       throw new Error("이미 가입된 이메일입니다.");
     }
+    await userController.checkNickname({ body: { nickname } });
+
     const userByNickname = await User.findOne({ nickname });
     if (userByNickname) {
       throw new Error("이미 가입된 닉네임입니다.");
