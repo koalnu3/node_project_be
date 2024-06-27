@@ -3,19 +3,19 @@ const User = require("./User");
 const Category = require("./Category");
 const Schema = mongoose.Schema;
 
+const subItemSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
+  },
+});
+
 const curriculumItemSchema = new Schema({
   title: {
     type: String,
     required: true,
   },
   subItems: [subItemSchema],
-});
-
-const subItemSchema = new Schema({
-  title: {
-    type: String,
-    required: true,
-  },
 });
 
 const classSchema = Schema(
