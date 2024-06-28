@@ -47,9 +47,9 @@ const classSchema = Schema(
     },
     notice: {
       type: String,
-      required: true,
+      required: false,
     },
-    category: {
+    categoryId: {
       type: String,
       required: true,
     },
@@ -57,10 +57,10 @@ const classSchema = Schema(
       type: mongoose.ObjectId,
       ref: User,
     },
-    status: {
-      type: String,
-      default: "request",
-    },
+    // status: {
+    //   type: String,
+    //   default: "request",
+    // },
     isDeleted: {
       type: Boolean,
       default: false,
