@@ -109,6 +109,35 @@ orderController.getOrderList = async (req, res) => {
   }
 };
 
+//Id로 주문조회
+orderController.getOrderListById = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    if (!userId) {
+      return res.status(400).json({ status: "fail", error: "유저를 선택해주세요" });
+    }
+
+    let condition = { userId : userId };
+
+    const orderList = await Order.find(condition)
+      .populate({
+        path: "userId",
+        select: "nickname email",
+      })
+      .populate({
+        path: "classId",
+        select: "name image",
+      });
+
+    let response = { status: "success" };
+    response.orderList = orderList;
+
+    res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json({ status: "fail", error: error.message });
+  }
+};
+
 //주문수정(환불-관리자)
 orderController.updateOrder = async (req, res) => {
   try {

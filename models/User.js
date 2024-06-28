@@ -42,6 +42,10 @@ const userSchema = Schema(
       type: String,
       required: false,
     },
+    information:{
+      type: String,
+      default: ""
+    }
   },
   { timestamps: true }
 );
