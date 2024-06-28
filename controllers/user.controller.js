@@ -100,7 +100,7 @@ userController.createUser = async (req, res) => {
   }
 };
 
-//관리자 -> 유저수정
+//유저수정
 userController.updateUser = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -131,6 +131,20 @@ userController.getUser = async (req, res) => {
     throw new Error("invaild token");
   } catch (err) {
     res.status(400).json({ status: "error", error: err.message });
+  }
+};
+
+//유저삭제
+userController.deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) throw new Error("No user found");
+
+    res.status(200).json({ status: "success", message: "User deleted successfully" });
+  } catch (error) {
+    return res.status(400).json({ status: "fail", error: error.message });
   }
 };
 

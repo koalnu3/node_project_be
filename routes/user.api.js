@@ -1,36 +1,38 @@
-const express = require("express");
-const router = express.Router();
-const userController = require("../controllers/user.controller");
-const authController = require("../controllers/auth.controller");
+const express = require('express')
+const router = express.Router()
+const userController = require('../controllers/user.controller');
+const authController = require('../controllers/auth.controller');
 
 //회원가입
-router.post("/", userController.createUser);
-
-//닉네임 수정
-router.put(
-  "/",
-  authController.authenticate,
-  userController.checkNickname,
-  userController.updateCustomer
-);
+router.post('/', userController.createUser);
 
 //회원조회
-router.get("/me", authController.authenticate, userController.getUser);
+router.get(
+    '/me', 
+    authController.authenticate, 
+    userController.getUser
+);
 
 
 //관리자 -> 전체유저 조회
 router.get(
-  "/",
-  authController.authenticate,
-  authController.checkAdminPermission,
-  userController.getUserList
+    '/', 
+    authController.authenticate,
+    authController.checkAdminPermission, 
+    userController.getUserList
 );
 
-//관리자 -> 유저수정
+//유저수정
 router.put(
-  "/:id",
-  authController.authenticate,
-  authController.checkAdminPermission,
-  userController.updateUser
+    '/:id', 
+    authController.authenticate,
+    userController.updateUser
+);
+
+//유저삭제
+router.delete(
+    '/:id', 
+    authController.authenticate,
+    userController.deleteUser
 );
 module.exports = router;
