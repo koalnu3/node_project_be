@@ -16,6 +16,13 @@ router.get('/', classController.getClass);
 //클래스상세조회
 router.get("/:id", classController.getClassById);
 
+//유저id로 클래스조회(관리자)
+router.get(
+    "/admin", 
+    authController.authenticate, 
+    classController.getClassByUserId
+);
+
 //클래스수정
 router.put('/:id', 
     authController.authenticate, 

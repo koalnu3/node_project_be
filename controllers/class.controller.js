@@ -1,5 +1,6 @@
 const Class = require("../models/Class");
 const { response } = require("express");
+const mongoose = require('mongoose');
 const PAGE_SIZE = 8;
 const classController = {};
 
@@ -110,5 +111,21 @@ classController.getClassById = async (req, res) => {
     return res.status(400).json({ status: "fail", error: error.message });
   }
 };
+
+//유저ID로 클래스리스트 조회
+classController.getClassByUserId = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    console.log(userId)
+    if (!userId) throw new Error("User not found");
+
+    const classes = await Class.find({ userId });
+
+    res.status(200).json({ status: "success", data: classes });
+  } catch (error) {
+    return res.status(400).json({ status: "fail", error: error.message });
+  }
+};
+
 
 module.exports = classController;

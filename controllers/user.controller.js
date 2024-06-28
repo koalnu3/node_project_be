@@ -82,20 +82,17 @@ userController.getUser = async (req, res) => {
 //관리자 -> 전체유저 조회
 userController.getUserList = async (req, res) => {
   try {
-    const { page, email, nickname, level, status } = req.query;
+    const { page, nickname, level } = req.query;
     const PAGE_SIZE = 10;
 
     const cond = {
-      ...(email && { email: { $regex: email, $options: "i" } }),
       ...(nickname && { nickname: { $regex: nickname, $options: "i" } }),
       ...(level && { level: { $in: [level] } }),
-      ...(status && { status: { $in: [status] } }),
     };
 
     const query = User.find(cond)
       .skip((page - 1) * PAGE_SIZE)
-      .limit(PAGE_SIZE);
-
+      .limit(PAGE_SIZE)
     const totalItemNum = await User.countDocuments(cond);
     const totalPageNum = Math.ceil(totalItemNum / PAGE_SIZE);
 
