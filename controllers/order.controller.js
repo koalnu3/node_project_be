@@ -35,11 +35,9 @@ orderController.createOrder = async (req, res) => {
 orderController.getOrder = async (req, res) => {
   try {
     const { userId } = req;
-    const { page } = req.query;
-
+    const { page } = req.query || 1;
     // 조건 정의
     const condition = { userId };
-
     // Order 컬렉션에서 userId가 일치하는 자료 조회 및 User 컬렉션에서 userId에 해당하는 사용자 정보 populate
     // const orderList = await Order.find({ condition }).populate({  ==> ({ condition }) 이렇게 하면 조회안됨
     const orderList = await Order.find(condition)
@@ -50,9 +48,9 @@ orderController.getOrder = async (req, res) => {
       .populate({
         path: "classId",
         select: "name image",
-      })
-      .skip((page - 1) * PAGE_SIZE)
-      .limit(PAGE_SIZE);
+      });
+    // .skip((page - 1) * PAGE_SIZE)
+    // .limit(PAGE_SIZE);
 
     // 총 문서 수를 센다
     const totalItemNum = await Order.countDocuments(condition);
@@ -68,7 +66,7 @@ orderController.getOrder = async (req, res) => {
     response.totalPageNum = totalPageNum;
     response.orderList = orderList;
 
-    res.status(200).json(response);
+    res.status(200).json({ status: "success", orderList });
   } catch (err) {
     res.status(400).json({ status: "fail", error: err.message });
   }

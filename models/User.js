@@ -28,7 +28,7 @@ const userSchema = Schema(
     },
     level: {
       type: String,
-      default: "customer", //3type: customer, teacher, admin
+      default: "customer", //3type: customer, unsigned ,teacher, admin
     },
     introduction: {
       type: String,
