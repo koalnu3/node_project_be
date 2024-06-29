@@ -8,6 +8,14 @@ const subItemSchema = new Schema({
     type: String,
     required: true,
   },
+  link: {
+    type: String,
+    required: true,
+  },
+  time: {
+    type: String,
+    required: false,
+  },
 });
 
 const curriculumItemSchema = new Schema({
