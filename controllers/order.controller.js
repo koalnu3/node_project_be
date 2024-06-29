@@ -114,10 +114,12 @@ orderController.getOrderListById = async (req, res) => {
   try {
     const { userId } = req.query;
     if (!userId) {
-      return res.status(400).json({ status: "fail", error: "유저를 선택해주세요" });
+      return res
+        .status(400)
+        .json({ status: "fail", error: "유저를 선택해주세요" });
     }
 
-    let condition = { userId : userId };
+    let condition = { userId: userId };
 
     const orderList = await Order.find(condition)
       .populate({
@@ -159,6 +161,46 @@ orderController.updateOrder = async (req, res) => {
     res.status(200).json(response);
   } catch (err) {
     res.status(400).json({ status: "fail", error: err.message });
+  }
+};
+
+orderController.getOrderByUserAndClass = async (req, res) => {
+  try {
+    // const { userId, classId } = req.query;
+    const { classId } = req.query;
+    const { userId } = req;
+    if (!userId || !classId) {
+      return res
+        .status(400)
+        .json({ status: "fail", error: "유저와 클래스의 값이 없습니다." });
+    }
+
+    // 조건 정의
+    const condition = { userId, classId };
+
+    // 조건에 맞는 주문 조회 및 관련 데이터 populate
+    const orderList = await Order.find(condition)
+      .populate({
+        path: "userId",
+        select: "nickname email",
+      })
+      .populate({
+        path: "classId",
+        select: "name",
+      });
+
+    // 상태 값 정의
+    const orderExists = orderList.length > 0;
+
+    let response = {
+      status: "success",
+      orderExists, // 상태 값 추가
+      orderList,
+    };
+
+    res.status(200).json(response);
+  } catch (error) {
+    return res.status(400).json({ status: "fail", error: error.message });
   }
 };
 
