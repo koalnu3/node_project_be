@@ -18,11 +18,7 @@ router.post("/", authController.authenticate, orderController.createOrder);
 router.get("/me", authController.authenticate, orderController.getOrder);
 
 //id로 주문조회(관리자)
-router.get(
-  "/", 
-  authController.authenticate, 
-  orderController.getOrderListById
-);
+router.get("/", authController.authenticate, orderController.getOrderListById);
 
 //주문수정(환불-관리자)
 router.put(
@@ -30,6 +26,12 @@ router.put(
   authController.authenticate,
   authController.checkAdminPermission,
   orderController.updateOrder
+);
+
+router.get(
+  "/byUserAndClass",
+  authController.authenticate,
+  orderController.getOrderByUserAndClass
 );
 
 module.exports = router;

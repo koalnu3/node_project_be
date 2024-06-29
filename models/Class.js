@@ -12,10 +12,6 @@ const subItemSchema = new Schema({
     type: String,
     required: false,
   },
-  link: {
-    type: String,
-    required: true,
-  },
   time: {
     type: String,
     required: false,
