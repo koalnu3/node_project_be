@@ -1,6 +1,6 @@
 const Class = require("../models/Class");
 const mongoose = require("mongoose");
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 12;
 const classController = {};
 
 classController.createClass = async (req, res) => {
