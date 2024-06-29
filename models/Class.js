@@ -6,7 +6,11 @@ const Schema = mongoose.Schema;
 const subItemSchema = new Schema({
   title: {
     type: String,
-    required: true,
+    required: false,
+  },
+  link: {
+    type: String,
+    required: false,
   },
   link: {
     type: String,
@@ -30,7 +34,7 @@ const classSchema = Schema(
   {
     id: {
       type: String,
-      required: true,
+      required: false,
       unique: true,
     },
     name: {

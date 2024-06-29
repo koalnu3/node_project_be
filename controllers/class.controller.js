@@ -1,6 +1,6 @@
 const Class = require("../models/Class");
 const mongoose = require("mongoose");
-const PAGE_SIZE = 12;
+const PAGE_SIZE = 8;
 const classController = {};
 
 classController.createClass = async (req, res) => {
@@ -156,7 +156,6 @@ classController.getClassById = async (req, res) => {
 classController.getClassByUserId = async (req, res) => {
   try {
     const { userId } = req.query;
-    console.log(userId);
     if (!userId) throw new Error("User not found");
 
     const classes = await Class.find({ userId });

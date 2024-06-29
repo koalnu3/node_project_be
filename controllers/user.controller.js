@@ -142,7 +142,9 @@ userController.deleteUser = async (req, res) => {
     const deletedUser = await User.findByIdAndDelete(userId);
     if (!deletedUser) throw new Error("No user found");
 
-    res.status(200).json({ status: "success", message: "User deleted successfully" });
+    res
+      .status(200)
+      .json({ status: "success", message: "User deleted successfully" });
   } catch (error) {
     return res.status(400).json({ status: "fail", error: error.message });
   }
@@ -161,7 +163,7 @@ userController.getUserList = async (req, res) => {
 
     const query = User.find(cond)
       .skip((page - 1) * PAGE_SIZE)
-      .limit(PAGE_SIZE)
+      .limit(PAGE_SIZE);
     const totalItemNum = await User.countDocuments(cond);
     const totalPageNum = Math.ceil(totalItemNum / PAGE_SIZE);
 
