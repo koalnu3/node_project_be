@@ -34,28 +34,6 @@ userController.updateCustomer = async (req, res) => {
   }
 };
 
-userController.updateProfileImage = async (req, res) => {
-  try {
-    const imageFile = req.file;
-    if (!imageFile) {
-      throw new Error("No image provided");
-    }
-    const userData = await User.findByIdAndUpdate(
-      { _id: req.userId },
-      {
-        image: imageFile.path, // Store the path or handle the file as needed
-      },
-      { new: true }
-    );
-
-    if (!userData) {
-      throw new Error("해당유저가 없습니다.");
-    }
-    return res.status(200).json({ status: "success", userData });
-  } catch (error) {
-    res.status(400).json({ status: "fail", error: err.message });
-  }
-};
 userController.createUser = async (req, res) => {
   try {
     let {
@@ -67,17 +45,10 @@ userController.createUser = async (req, res) => {
       level,
       introduction,
       career,
-      status,
     } = req.body;
     const user = await User.findOne({ email });
     if (user) {
       throw new Error("이미 가입된 이메일입니다.");
-    }
-    await userController.checkNickname({ body: { nickname } });
-
-    const userByNickname = await User.findOne({ nickname });
-    if (userByNickname) {
-      throw new Error("이미 가입된 닉네임입니다.");
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -91,7 +62,6 @@ userController.createUser = async (req, res) => {
       level: level ? level : "customer",
       introduction: introduction ? introduction : "",
       career: career ? career : "",
-      status: status ? status : "",
     });
     await newUser.save();
     return res.status(200).json({ status: "success", user });

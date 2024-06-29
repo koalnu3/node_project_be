@@ -4,7 +4,7 @@ const userController = require("../controllers/user.controller");
 const authController = require("../controllers/auth.controller");
 
 //회원가입
-router.post("/", userController.createUser);
+router.post("/", userController.checkNickname, userController.createUser);
 
 //닉네임 수정
 router.put(
