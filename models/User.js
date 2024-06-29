@@ -20,6 +20,7 @@ const userSchema = Schema(
     },
     image: {
       type: String,
+      default: "",
       required: false,
     },
     phoneNumber: {
@@ -42,10 +43,10 @@ const userSchema = Schema(
       type: String,
       required: false,
     },
-    information:{
+    information: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   { timestamps: true }
 );
