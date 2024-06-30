@@ -28,11 +28,11 @@ const curriculumItemSchema = new Schema({
 
 const classSchema = Schema(
   {
-    id: {
-      type: String,
-      required: false,
-      unique: true,
-    },
+    // id: {
+    //   type: String,
+    //   required: false,
+    //   unique: true,
+    // },
     name: {
       type: String,
       required: true,
