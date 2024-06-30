@@ -61,6 +61,10 @@ const classSchema = Schema(
       type: String,
       required: true,
     },
+    category: {
+      type: String,
+      required: true,
+    },
     userId: {
       type: mongoose.ObjectId,
       ref: User,

@@ -12,6 +12,7 @@ classController.createClass = async (req, res) => {
       curriculum,
       price,
       notice,
+      category,
       categoryId,
       userId,
     } = req.body;
@@ -23,6 +24,7 @@ classController.createClass = async (req, res) => {
       curriculum,
       price,
       notice,
+      category,
       categoryId,
       userId,
     });
@@ -38,6 +40,8 @@ classController.getClass = async (req, res) => {
   try {
     const { page = 1, name, category, sortBy } = req.query;
     let response = { status: "success" };
+
+    console.log("category", category);
 
     // 조건문 작성
     const cond = {
@@ -103,11 +107,28 @@ classController.getMyClass = async (req, res) => {
 classController.updateClass = async (req, res) => {
   try {
     const classId = req.params.id;
-    const { name, description, image, curriculum, price, categoryId, userId } =
-      req.body;
+    const {
+      name,
+      description,
+      image,
+      curriculum,
+      price,
+      category,
+      categoryId,
+      userId,
+    } = req.body;
     const updatedClass = await Class.findByIdAndUpdate(
       classId,
-      { name, description, image, curriculum, price, categoryId, userId },
+      {
+        name,
+        description,
+        image,
+        curriculum,
+        price,
+        category,
+        categoryId,
+        userId,
+      },
       {
         new: true,
       }
