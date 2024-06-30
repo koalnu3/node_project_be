@@ -6,7 +6,15 @@ const Schema = mongoose.Schema;
 const subItemSchema = new Schema({
   title: {
     type: String,
-    required: true,
+    required: false,
+  },
+  link: {
+    type: String,
+    required: false,
+  },
+  time: {
+    type: String,
+    required: false,
   },
 });
 
@@ -22,7 +30,7 @@ const classSchema = Schema(
   {
     id: {
       type: String,
-      required: true,
+      required: false,
       unique: true,
     },
     name: {

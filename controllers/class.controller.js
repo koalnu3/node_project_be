@@ -1,6 +1,6 @@
 const Class = require("../models/Class");
-const mongoose = require('mongoose');
-const PAGE_SIZE = 8;
+const mongoose = require("mongoose");
+const PAGE_SIZE = 12;
 const classController = {};
 
 classController.createClass = async (req, res) => {
@@ -140,10 +140,11 @@ classController.getClassById = async (req, res) => {
     const classId = req.params.id;
     // 클래스 찾기 및 likes 값 1 증가
     const targetClass = await Class.findByIdAndUpdate(
-      classId,
+      { _id: classId },
       { $inc: { likes: 1 } },
       { new: true }
-    );
+    ).populate("userId", "nickname image introduction career information");
+
     if (!targetClass) throw new Error("No item found");
     res.status(200).json({ status: "success", data: targetClass });
   } catch (error) {
@@ -155,7 +156,6 @@ classController.getClassById = async (req, res) => {
 classController.getClassByUserId = async (req, res) => {
   try {
     const { userId } = req.query;
-    console.log(userId)
     if (!userId) throw new Error("User not found");
 
     const classes = await Class.find({ userId });
@@ -165,6 +165,5 @@ classController.getClassByUserId = async (req, res) => {
     return res.status(400).json({ status: "fail", error: error.message });
   }
 };
-
 
 module.exports = classController;

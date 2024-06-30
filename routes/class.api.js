@@ -5,7 +5,7 @@ const router = express.Router();
 
 //클래스등록 (강사권한확인?)
 router.post("/", authController.authenticate, classController.createClass);
-router.get("/my/:id", classController.getMyClass);
+router.get("/my/:id", authController.authenticate, classController.getMyClass);
 
 //클래스조회
 router.get("/", classController.getClass);
@@ -15,9 +15,9 @@ router.get("/:id", classController.getClassById);
 
 //유저id로 클래스조회(관리자)
 router.get(
-    "/admin", 
-    authController.authenticate, 
-    classController.getClassByUserId
+  "/admin",
+  authController.authenticate,
+  classController.getClassByUserId
 );
 
 //클래스수정
