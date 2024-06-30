@@ -8,30 +8,37 @@ router.post('/', userController.createUser);
 
 //회원조회
 router.get(
-    '/me', 
-    authController.authenticate, 
+    '/me',
+    authController.authenticate,
     userController.getUser
 );
 
+//닉네임 수정
+router.put(
+    "/",
+    authController.authenticate,
+    userController.checkNickname,
+    userController.updateCustomer
+);
 
 //관리자 -> 전체유저 조회
 router.get(
-    '/', 
+    '/',
     authController.authenticate,
-    authController.checkAdminPermission, 
+    authController.checkAdminPermission,
     userController.getUserList
 );
 
 //유저수정
 router.put(
-    '/:id', 
+    '/:id',
     authController.authenticate,
     userController.updateUser
 );
 
 //유저삭제
 router.delete(
-    '/:id', 
+    '/:id',
     authController.authenticate,
     userController.deleteUser
 );
